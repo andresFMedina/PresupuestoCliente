@@ -1,0 +1,75 @@
+<form [formGroup]="form">
+    <mat-grid-list cols="5" rowHeight="500px" class="full-width">
+        <mat-grid-tile [colspan]="3" [rowspan]="2">
+            <mat-card class="full-width full-height">
+                <mat-card-header>
+                    <mat-card-title>
+                        Item
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input placeholder="Codigo" formControlName="codigo" matInput type="text">
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input placeholder="Unidad" formControlName="unidad" matInput type="text">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input placeholder="Cantidad" formControlName="cantidad" matInput type="number">
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input placeholder="Aporte" formControlName="aporte" matInput type="number">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <textarea placeholder="Descripcion" formControlName="descripcion" matInput type="text"
+                                    matTextareaAutosize matAutosizeMinRows=3 matAutosizeMaxRows=6></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row buttons">
+                        <div class="col">
+                            <a mat-raised-button color="primary" (click)="showResourceTable()" class="full-width">
+                                <mat-icon>add</mat-icon>
+                                Agregar Recurso Báscico
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a mat-raised-button color="primary" (click)="showAnalysisTable()" class="full-width">
+                                <mat-icon>add</mat-icon>
+                                Agregar Análisis Unitario
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <app-table (save)="createItem($event)"  [isProcesing]="isProcesing" [itemId]="id"></app-table>
+                        </div>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <div class="full-width full-height">
+                <app-table-resource *ngIf="isRecursoSelected" (recursoSelected)="addResource($event)"></app-table-resource>
+                <app-table-analysis *ngIf="!isRecursoSelected && proyecto" [proyecto]="proyecto" (analisisSelected)="addAnalysis($event)"></app-table-analysis>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+
+</form>

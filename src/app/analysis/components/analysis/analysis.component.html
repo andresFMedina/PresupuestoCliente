@@ -1,0 +1,48 @@
+<form [formGroup]="form">
+    <mat-grid-list cols="7" rowHeight="350px">
+        <mat-grid-tile [colspan]="4" [rowspan]="2">
+            <mat-card class="full-width full-height">
+                <mat-card-header>
+                    <mat-card-title>
+                        Item
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input placeholder="Codigo" formControlName="codigo" matInput type="text">
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <input placeholder="Unidad" formControlName="unidad" matInput type="text">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="full-width">
+                                <textarea placeholder="Descripcion" formControlName="descripcion" matInput type="text"
+                                    matTextareaAutosize matAutosizeMinRows=3 matAutosizeMaxRows=6></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <app-table (save)="createAnalisis($event)" [isProcesing]="isProcesing" [analisisId]="id"></app-table>
+                        </div>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="2">
+            <div class="full-width full-height">
+                <app-table-resource (recursoSelected)="addResource($event)"></app-table-resource>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+
+</form>

@@ -1,0 +1,88 @@
+<form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Información General del Proyecto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Nombre del Proyecto" formControlName="projectName">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Contratante" formControlName="contractor">
+            <mat-error *ngIf="form.controls['contractor'].hasError('required')">
+              First name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Proponente" formControlName="proponent">
+            <mat-error *ngIf="form.controls['proponent'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="pickerEnd" placeholder="Fecha de Presentación" formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput [disabled]="true" [matDatepicker]="pickerEdit" placeholder="Fecha de Modificación" formControlName="editDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerEdit"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEdit></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Herramienta Menor" formControlName="tool" type="number">
+            <mat-error *ngIf="form.controls['contractor'].hasError('required')">
+              First name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Prestaciones Sociales" formControlName="benefits" type="number">
+            <mat-error *ngIf="form.controls['proponent'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Desperdicio Materiales" formControlName="waste" type="number">
+            <mat-error *ngIf="form.controls['proponent'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <textarea matInput placeholder="Herramienta Menor" formControlName="comments"></textarea>              
+            </mat-form-field>
+          </div>          
+        </div>
+      
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

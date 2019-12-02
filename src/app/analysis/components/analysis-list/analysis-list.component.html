@@ -1,0 +1,71 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Análisis Unitarios
+        </mat-card-title>
+        <a mat-button color="primary" [routerLink]="['/analysis/create']">CREAR NUEVO ANÁLISIS UNITARIO</a>
+    </mat-card-header>
+    <mat-card-content>
+        <table mat-table [dataSource]=analisisUnitarios class="mat-elevation-z8">
+            <!--Columna codigo-->
+            <ng-container matColumnDef="codigo">
+                <th mat-header-cell *matHeaderCellDef> Código </th>
+                <td mat-cell *matCellDef="let item">
+                    {{item.codigo}}
+                </td>
+            </ng-container>
+
+            <!--Columna Descripcion-->
+            <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                <td mat-cell *matCellDef="let item">
+                    {{item.descripcion}}
+                </td>
+            </ng-container>
+
+            <!--Columna unidad-->
+            <ng-container matColumnDef="unidad">
+                <th mat-header-cell *matHeaderCellDef> Unidad </th>
+                <td mat-cell *matCellDef="let item">
+                    {{item.unidad}}
+                </td>
+            </ng-container>
+
+            <!--Columna Precio Unidad-->
+            <ng-container matColumnDef="precio">
+                <th mat-header-cell *matHeaderCellDef> Precio Unidad </th>
+                <td mat-cell *matCellDef="let item">
+                    {{(item.valorUnitario | currency)}}
+                </td>
+            </ng-container>
+
+            <!--Boton Editar-->
+            <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let item; let index = index">
+                    <a mat-icon-button [routerLink]="['/analysis/edit', item.id]">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <!--Boton Eliminar-->
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <th mat-header-cell *matHeaderCellDef> Porcentaje </th>
+                <td mat-cell *matCellDef="let item; let index = index">
+                    <button mat-icon-button aria-label="Example icon-button with a heart icon">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef=displayedColumns></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>

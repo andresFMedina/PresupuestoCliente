@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.full-width {
+  width: 100%;
+}
+table {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-cell {
+  padding: 8px 8px 8px 0;  
+}
+
+.mat-header-cell {
+  padding: 8px 8px 8px 0;  
+}
+
+.mat-column-rendimiento {
+  width: 70px;
+}
