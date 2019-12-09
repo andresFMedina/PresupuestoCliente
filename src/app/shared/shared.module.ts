@@ -11,6 +11,7 @@ import { InfoFormComponent } from './components/info-form/info-form.component';
 import { DialogCreateComponent } from './components/dialog-create/dialog-create.component';
 import { TableAnalysisComponent } from './components/table-analysis/table-analysis.component';
 import { ItemTableComponent } from './components/item-table/item-table.component';
+import { DialogResourceComponent } from './components/dialog-resource/dialog-resource.component';
 
 
 
@@ -24,7 +25,8 @@ import { ItemTableComponent } from './components/item-table/item-table.component
     DialogCreateComponent,
     TableAnalysisComponent,
     ItemTableComponent,
-    TableCostComponent
+    TableCostComponent,
+    DialogResourceComponent
   ],
   imports: [
     CommonModule,

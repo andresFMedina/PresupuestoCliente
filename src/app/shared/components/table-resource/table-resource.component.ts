@@ -1,3 +1,5 @@
+import { DialogResourceComponent } from './../dialog-resource/dialog-resource.component';
+import { MatDialog } from '@angular/material/dialog';
 import { RecursoBasico } from './../../../core/models/recurso-basico.model';
 import { RecursoBasicoService } from './../../../core/services/recurso-basico/recurso-basico.service';
 import { Component, OnInit, ViewChild, AfterViewInit, EventEmitter, Output } from '@angular/core';
@@ -22,7 +24,8 @@ export class TableResourceComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   constructor(
-    private recursoBasicoService: RecursoBasicoService
+    private recursoBasicoService: RecursoBasicoService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -54,6 +57,18 @@ export class TableResourceComponent implements OnInit, AfterViewInit {
 
   selectResource(recursoBasico: RecursoBasico) {
     this.recursoSelected.emit(recursoBasico);
+  }
+
+  openDialogResources() {
+    const dialogRef = this.dialog.open(DialogResourceComponent, {
+      width: '600px'
+    });
+
+    dialogRef.beforeClosed().subscribe(
+      () => {
+        this.fetchRecursoBasico(this.filter, this.paginator.pageIndex);
+      }
+    );
   }
 
 }
