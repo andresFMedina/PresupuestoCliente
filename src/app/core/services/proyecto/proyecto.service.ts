@@ -1,3 +1,4 @@
+import { ListResponse, SingleResponse } from './../../models/response.interface';
 import { environment } from './../../../../environments/environment';
 import { Proyecto } from './../../models/proyecto.model';
 import { HttpClient } from '@angular/common/http';
@@ -24,14 +25,14 @@ export class ProyectoService {
   }
 
   getProyectos() {
-    return this.http.get<Proyecto[]>(`${this.url}/Proyecto/`);
+    return this.http.get<ListResponse<Proyecto>>(`${this.url}/Proyecto/`);
   }
 
   getProyectoById(id: number) {
-    return this.http.get<Proyecto>(`${this.url}/Proyecto/${id}`);
+    return this.http.get<SingleResponse<Proyecto>>(`${this.url}/Proyecto/${id}`);
   }
 
   postProyecto(proyecto: Proyecto) {
-    return this.http.post(`${this.url}/Proyecto/`, proyecto);
+    return this.http.post<SingleResponse<Proyecto>>(`${this.url}/Proyecto/`, proyecto);
   }
 }

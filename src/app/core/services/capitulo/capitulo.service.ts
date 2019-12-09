@@ -1,3 +1,4 @@
+import { ListResponse, SingleResponse } from './../../models/response.interface';
 import { Capitulo } from './../../models/capitulo.model';
 import { environment } from './../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -15,19 +16,19 @@ export class CapituloService {
   ) { }
 
   getCapitulosByProyectoId(proyectoId: number) {
-    return this.http.get<Capitulo[]>(`${this.urlApi}?proyectoId=${proyectoId}`);
+    return this.http.get<ListResponse<Capitulo>>(`${this.urlApi}?proyectoId=${proyectoId}`);
   }
 
   getCapituloById(id: number) {
-    return this.http.get<Capitulo>(`${this.urlApi}/${id}`);
+    return this.http.get<SingleResponse<Capitulo>>(`${this.urlApi}/${id}`);
   }
 
   postCapitulo(capitulo: Capitulo) {
-    return this.http.post<Capitulo>(this.urlApi, capitulo);
+    return this.http.post<SingleResponse<Capitulo>>(this.urlApi, capitulo);
   }
 
   putCapitulo(capitulo: Capitulo) {
-    return this.http.put(`${this.urlApi}/${capitulo.id}`, capitulo);
+    return this.http.put<Response>(`${this.urlApi}/${capitulo.id}`, capitulo);
   }
 
 }

@@ -1,3 +1,4 @@
+import { PagedResponse, SingleResponse, ListResponse, Response } from './../../models/response.interface';
 import { BehaviorSubject } from 'rxjs';
 import { Paginator } from './../../models/paginator';
 import { Item } from './../../models/item.model';
@@ -24,26 +25,26 @@ export class ItemService {
   }
 
   getItemByProyectoId(proyectoId: number) {
-    return this.http.get<Paginator<Item>>(`${this.urlApi}?proyectoId=${proyectoId}`);
+    return this.http.get<PagedResponse<Item>>(`${this.urlApi}?proyectoId=${proyectoId}`);
   }
 
   getItemById(id) {
-    return this.http.get<Item>(`${this.urlApi}/${id}`);
+    return this.http.get<SingleResponse<Item>>(`${this.urlApi}/${id}`);
   }
 
   getItemByCapituloId(capituloId) {
-    return this.http.get<Item[]>(`${this.urlApi}/Capitulo?capituloId=${capituloId}`);
+    return this.http.get<ListResponse<Item>>(`${this.urlApi}/Capitulo?capituloId=${capituloId}`);
   }
 
   getCostoDirecto(proyectoId: number) {
-    return this.http.get<number>(`${this.urlApi}/CostoDirecto?proyectoId=${proyectoId}`);
+    return this.http.get<SingleResponse<number>>(`${this.urlApi}/CostoDirecto?proyectoId=${proyectoId}`);
   }
 
   postItem(item: Item) {
-    return this.http.post<Item>(this.urlApi, item);
+    return this.http.post<SingleResponse<Item>>(this.urlApi, item);
   }
 
   putItem(item: Item) {
-    return this.http.put(`${this.urlApi}/${item.id}`, item);
+    return this.http.put<Response>(`${this.urlApi}/${item.id}`, item);
   }
 }

@@ -32,7 +32,7 @@ export class ChapterListComponent implements OnInit {
       )
     ).subscribe(
       (capitulos) => {
-        this.capitulos = capitulos;
+        this.capitulos = capitulos.model;
       }
     );
   }

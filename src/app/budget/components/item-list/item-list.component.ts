@@ -33,7 +33,7 @@ export class ItemListComponent implements OnInit {
       )
     ).subscribe(
       (results) => {
-        this.items = results.result;
+        this.items = results.model;
         this.resultsLength = results.totalRegister;
       }
     );

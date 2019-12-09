@@ -33,7 +33,7 @@ export class AnalysisListComponent implements OnInit {
       )
     ).subscribe(
       (results) => {
-        this.analisisUnitarios = results.result;
+        this.analisisUnitarios = results.model;
         this.resultsLength = results.totalRegister;
       }
     );

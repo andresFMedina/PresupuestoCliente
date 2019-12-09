@@ -40,7 +40,7 @@ export class TableAiuComponent implements OnInit {
         }))
       .subscribe(
         (costosIndirectos) => {
-          this.costs = costosIndirectos;
+          this.costs = costosIndirectos.model;
           this.costs.forEach((c) => this.addRow(c, false));
           this.updateView();
         });
@@ -79,9 +79,9 @@ export class TableAiuComponent implements OnInit {
         proyectoId: this.proyecto.id
       };
       this.costoIndirectoService.postCostoIndirecto(cost).subscribe(
-        (response: CostoIndirecto) => {
+        (response) => {
           console.log(response);
-          this.costs.push(response);
+          this.costs.push(response.model);
         },
         (error) => {
           console.error(error.error);

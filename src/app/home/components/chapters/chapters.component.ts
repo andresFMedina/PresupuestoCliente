@@ -37,8 +37,8 @@ export class ChaptersComponent implements OnInit {
       )
       .subscribe(
         (capitulos) => {
-          this.capitulos = capitulos;
-          capitulos.forEach(c => this.startData(c));
+          this.capitulos = capitulos.model;
+          this.capitulos.forEach(c => this.startData(c));
         },
         (error) => {
           console.log(error.error);
@@ -63,7 +63,7 @@ export class ChaptersComponent implements OnInit {
     this.itemService.getItemByCapituloId(capitulo.id).subscribe(
       (items) => {
         console.log(items);
-        items.forEach((i) => {
+        items.model.forEach((i) => {
           i.valorParcial = i.valorUnitario * i.cantidad;
           i.numeroCapitulo = Number(`${capitulo.id}.${i.numeroCapitulo}`);
           console.log(i);

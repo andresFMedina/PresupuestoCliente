@@ -1,3 +1,4 @@
+import { PagedResponse, SingleResponse } from './../../models/response.interface';
 import { Paginator } from './../../models/paginator';
 
 import { environment } from './../../../../environments/environment';
@@ -16,19 +17,19 @@ export class AnalisisUnitarioService {
   ) { }
 
   getAnalisisUnitarioByProyectoId(proyectoId: number, page?: number, filter?: string) {
-    return this.http.get<Paginator<AnalisisUnitario>>(`${this.urlApi}?proyectoId=${proyectoId}`);
+    return this.http.get<PagedResponse<AnalisisUnitario>>(`${this.urlApi}?proyectoId=${proyectoId}`);
   }
 
   getAnalisisUnitarioById(id: number) {
-    return this.http.get<AnalisisUnitario>(`${this.urlApi}/${id}`);
+    return this.http.get<SingleResponse<AnalisisUnitario>>(`${this.urlApi}/${id}`);
   }
 
   postAnalisisUnitario(analisisUnitario: AnalisisUnitario) {
-    return this.http.post<AnalisisUnitario>(this.urlApi, analisisUnitario);
+    return this.http.post<SingleResponse<AnalisisUnitario>>(this.urlApi, analisisUnitario);
   }
 
   putAnalisisUnitario(changes: AnalisisUnitario, id: number) {
-    return this.http.put(`${this.urlApi}/${id}`, changes);
+    return this.http.put<Response>(`${this.urlApi}/${id}`, changes);
   }
 
 }

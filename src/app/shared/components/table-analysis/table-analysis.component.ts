@@ -33,7 +33,7 @@ export class TableAnalysisComponent implements OnInit, AfterViewInit {
     this.analisisUnitarioService.getAnalisisUnitarioByProyectoId(this.proyecto.id).subscribe((analisis) => {
       console.log(analisis);
       this.resultsLength = analisis.totalRegister;
-      this.analisis = analisis.result;
+      this.analisis = analisis.model;
     }, (error) => {
       console.error(error);
     });

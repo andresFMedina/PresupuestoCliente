@@ -51,7 +51,7 @@ export class ChapterComponent implements OnInit {
         return this.capituloService.getCapituloById(params.id);
       }))
       .subscribe((capitulo) => {
-        this.capitulo = capitulo;
+        this.capitulo = capitulo.model;
         console.log(capitulo);
         this.buildForm();
       });
@@ -94,7 +94,7 @@ export class ChapterComponent implements OnInit {
     this.capituloService.postCapitulo(capitulo).subscribe(
       (response) => {
         console.log(response);
-        this.capitulo = response;
+        this.capitulo = response.model;
         let numeroCapitulo = 1;
         items.forEach((i) => {
           i.capituloId = this.capitulo.id;

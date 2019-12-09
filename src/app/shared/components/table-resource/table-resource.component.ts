@@ -32,7 +32,7 @@ export class TableResourceComponent implements OnInit, AfterViewInit {
     console.log(filter);
     this.recursoBasicoService.getRecursosBasicos(filter, page).subscribe((recurso) => {
       this.resultsLength = recurso.totalRegister;
-      this.resources = recurso.result;
+      this.resources = recurso.model;
     }, (error) => {
       console.error(error);
     });
@@ -48,11 +48,11 @@ export class TableResourceComponent implements OnInit, AfterViewInit {
     this.filter = filter;
   }
 
-  ChangePage(event: PageEvent){
+  ChangePage(event: PageEvent) {
     this.fetchRecursoBasico(this.filter, event.pageIndex);
   }
 
-  selectResource(recursoBasico: RecursoBasico){
+  selectResource(recursoBasico: RecursoBasico) {
     this.recursoSelected.emit(recursoBasico);
   }
 

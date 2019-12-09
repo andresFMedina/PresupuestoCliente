@@ -32,7 +32,7 @@ export class ChapterTableComponent implements OnInit {
     this.itemService.getItemByCapituloId(this.capituloId).subscribe(
       (items) => {
         console.log(items);
-        items.forEach((i) => {
+        items.model.forEach((i) => {
           i.valorParcial = i.valorUnitario * i.cantidad;
           console.log(i);
           this.addRow(i);

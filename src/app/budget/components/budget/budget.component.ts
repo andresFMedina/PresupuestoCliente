@@ -55,7 +55,7 @@ export class BudgetComponent implements OnInit {
         return this.itemService.getItemById(this.id);
       }))
       .subscribe((item) => {
-        this.item = item;
+        this.item = item.model;
         console.log(item);
         this.buildForm();
       });
@@ -90,7 +90,7 @@ export class BudgetComponent implements OnInit {
       this.postItem(item, detalles);
     } else {
       this.putItem(item, detalles);
-    }    
+    }
   }
 
   addResource(recurso: RecursoBasico) {
@@ -140,7 +140,7 @@ export class BudgetComponent implements OnInit {
         console.log(response);
         // this.item = response;
         detalles.forEach((d) => {
-          this.postDetalle(d, response.id);
+          this.postDetalle(d, response.model.id);
         });
       },
       (error) => {

@@ -55,9 +55,9 @@ export class AiuComponent implements OnInit, AfterViewInit {
         (costosIndirectos) => {
           this.itemService.getCostoDirecto(this.proyecto.id).subscribe(
             (costo) => {
-              this.costoDirecto = costo;
-              this.costosIndirectos = costosIndirectos;
-              costosIndirectos.forEach(
+              this.costoDirecto = costo.model;
+              this.costosIndirectos = costosIndirectos.model;
+              this.costosIndirectos.forEach(
                 (c) => {
                   const transaction: Transaction = {
                     item: c.descripcion,

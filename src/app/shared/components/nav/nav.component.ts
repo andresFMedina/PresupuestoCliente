@@ -35,7 +35,7 @@ export class NavComponent implements OnInit {
   fetchProyectos(): void {
     this.proyectoService.getProyectos().subscribe(
       (proyectos) => {
-        this.proyectos = proyectos;
+        this.proyectos = proyectos.model;
         console.log(this.proyectos[0].nombre_Obra);
         this.setCurrentProject(this.proyectos[0]);
       },

@@ -43,15 +43,15 @@ export class TableCostComponent implements OnInit {
       )
       .pipe(
         switchMap((costo) => {
-          this.costoDirecto = costo;
-          this.itemService.setCurrentCostoDirecto(costo);
+          this.costoDirecto = costo.model;
+          this.itemService.setCurrentCostoDirecto(costo.model);
           return this.costoIndirectoService.getAiuTotal(this.proyecto.id);
         })
       )
       .subscribe(
         (aiu) => {
-          this.totalAiu = aiu;
-          this.costoIndirectoService.setAiu(aiu);
+          this.totalAiu = aiu.model;
+          this.costoIndirectoService.setAiu(aiu.model);
           this.data[0].costo = this.costoDirecto;
           this.data[1].costo = this.costoDirecto * this.totalAiu;
         },

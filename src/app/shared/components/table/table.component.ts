@@ -40,7 +40,7 @@ export class TableComponent implements OnInit {
     if (this.itemId !== 0) {
       this.detalleService.getDetallesByItemId(this.itemId).subscribe(
         (detalles) => {
-          detalles.forEach((d) => {
+          detalles.model.forEach((d) => {
             d.subTotal = d.precio * d.rendimiento;
             this.addRow(d, false);
           });
@@ -56,7 +56,7 @@ export class TableComponent implements OnInit {
     if (this.analisisId !== 0) {
       this.detalleService.getDetallesByAnalisisId(this.analisisId).subscribe(
         (detalles) => {
-          detalles.forEach((d) => {
+          detalles.model.forEach((d) => {
             d.subTotal = d.precio * d.rendimiento;
             this.addRow(d, false);
           });

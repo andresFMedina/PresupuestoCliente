@@ -1,3 +1,4 @@
+import { ListResponse, SingleResponse, Response } from './../../models/response.interface';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from './../../../../environments/environment';
 import { CostoIndirecto } from './../../models/costo-indirecto.model';
@@ -23,20 +24,20 @@ export class CostoIndirectoService {
   }
 
   getCostoIndirectoByProyectoId(proyectoId: number) {
-    return this.http.get<CostoIndirecto[]>(`${this.urlApi}?proyecto=${proyectoId}`);
+    return this.http.get<ListResponse<CostoIndirecto>>(`${this.urlApi}?proyecto=${proyectoId}`);
   }
 
   getAiuTotal(proyectoId: number) {
-    return this.http.get<number>(`${this.urlApi}/Total?proyectoId=${proyectoId}`);
+    return this.http.get<SingleResponse<number>>(`${this.urlApi}/Total?proyectoId=${proyectoId}`);
   }
 
   postCostoIndirecto(costoIndirecto: CostoIndirecto) {
-    return this.http.post(this.urlApi, costoIndirecto);
+    return this.http.post<SingleResponse<CostoIndirecto>>(this.urlApi, costoIndirecto);
   }
 
   putCostoIndirecto(costoIndirecto: CostoIndirecto) {
     const id = costoIndirecto.id;
-    return this.http.put(`${this.urlApi}/${id}`, costoIndirecto);
+    return this.http.put<Response>(`${this.urlApi}/${id}`, costoIndirecto);
   }
 
 }

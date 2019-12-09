@@ -51,7 +51,7 @@ export class AnalysisComponent implements OnInit {
         return this.analisisUnitarioService.getAnalisisUnitarioById(this.id);
       }))
       .subscribe((analisisUnitario) => {
-        this.analisisUnitario = analisisUnitario;
+        this.analisisUnitario = analisisUnitario.model;
         console.log(analisisUnitario);
         this.buildForm();
       });
@@ -108,7 +108,7 @@ export class AnalysisComponent implements OnInit {
         console.log(response);
         // this.analisisUnitario = response;
         detalles.forEach((d) => {
-          this.postDetalle(d, response.id);
+          this.postDetalle(d, response.model.id);
         });
       },
       (error) => {

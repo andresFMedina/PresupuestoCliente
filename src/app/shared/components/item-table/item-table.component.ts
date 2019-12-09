@@ -35,7 +35,7 @@ export class ItemTableComponent implements OnInit, AfterViewInit {
     console.log(filter);
     this.itemService.getItemByProyectoId(this.proyecto.id).subscribe((recurso) => {
       this.resultsLength = recurso.totalRegister;
-      this.items = recurso.result;
+      this.items = recurso.model;
     }, (error) => {
       console.error(error);
     });
@@ -51,7 +51,7 @@ export class ItemTableComponent implements OnInit, AfterViewInit {
       )
       .subscribe((item) => {
         this.resultsLength = item.totalRegister;
-        this.items = item.result;
+        this.items = item.model;
       }, (error) => {
         console.error(error);
       });

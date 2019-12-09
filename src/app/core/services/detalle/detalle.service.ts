@@ -1,3 +1,4 @@
+import { ListResponse, Response, SingleResponse } from './../../models/response.interface';
 import { environment } from './../../../../environments/environment';
 import { Detalle } from './../../models/detalle';
 import { HttpClient } from '@angular/common/http';
@@ -13,19 +14,19 @@ export class DetalleService {
   ) { }
 
   getDetallesByAnalisisId(id: number) {
-    return this.http.get<Detalle[]>(`${this.urlApi}?analisisId=${id}`);
+    return this.http.get<ListResponse<Detalle>>(`${this.urlApi}?analisisId=${id}`);
   }
 
   getDetallesByItemId(id: number) {
-    return this.http.get<Detalle[]>(`${this.urlApi}?itemId=${id}`);
+    return this.http.get<ListResponse<Detalle>>(`${this.urlApi}?itemId=${id}`);
   }
 
   putDetalle(changes: Detalle) {
-    return this.http.put(`${this.urlApi}/${changes.id}`, changes);
+    return this.http.put<Response>(`${this.urlApi}/${changes.id}`, changes);
   }
 
   postDetalle(detalle: Detalle) {
-    return this.http.post(this.urlApi, detalle);
+    return this.http.post<SingleResponse<Detalle>>(this.urlApi, detalle);
   }
 
   deleteDetalle(id: number) {
