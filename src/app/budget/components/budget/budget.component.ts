@@ -50,7 +50,7 @@ export class BudgetComponent implements OnInit {
     );
     this.route.params
       .pipe(switchMap((params: Params) => {
-        this.id = (params.id) ? params.id : 0;
+        this.id = (params.id) ? Number(params.id) : 0;
         console.log(this.id);
         return this.itemService.getItemById(this.id);
       }))

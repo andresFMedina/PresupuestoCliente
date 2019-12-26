@@ -46,7 +46,7 @@ export class AnalysisComponent implements OnInit {
     );
     this.route.params
       .pipe(switchMap((params: Params) => {
-        this.id = (params.id) ? params.id : 0;
+        this.id = (params.id) ? Number(params.id) : 0;
         console.log(this.id);
         return this.analisisUnitarioService.getAnalisisUnitarioById(this.id);
       }))
@@ -131,8 +131,11 @@ export class AnalysisComponent implements OnInit {
         this.isProcesing = false;
       }
     );
+    if (detalles === null) {
+      return;
+    }
     detalles.forEach((d) => {
-      if (d.analisisUnitarioId === 0) {
+      if (d.id === 0) {
         this.postDetalle(d, this.id);
       } else {
         this.putDetalle(d);
@@ -161,7 +164,7 @@ export class AnalysisComponent implements OnInit {
         this.isProcesing = false;
       },
       (error) => {
-        console.log(error.error);
+        console.error(error.error);
         this.isProcesing = false;
       }
     );
