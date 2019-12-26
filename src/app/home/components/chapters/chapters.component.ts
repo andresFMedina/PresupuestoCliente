@@ -32,6 +32,8 @@ export class ChaptersComponent implements OnInit {
       .pipe(
         switchMap((proyecto) => {
           this.proyecto = proyecto;
+          this.data = [];
+          this.items = [];
           return this.capituloService.getCapitulosByProyectoId(proyecto.id);
         })
       )

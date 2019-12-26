@@ -48,6 +48,8 @@ export class AiuComponent implements OnInit, AfterViewInit {
       .pipe(
         switchMap((proyecto) => {
           this.proyecto = proyecto;
+          this.data = [];
+          this.transactions = [];
           return this.costoIndirectoService.getCostoIndirectoByProyectoId(proyecto.id);
         })
       )
