@@ -24,7 +24,7 @@ export class TableComponent implements OnInit {
 
   @Output() save = new EventEmitter<Detalle[]>();
 
-  displayedColumns: string[] = ['codigo', 'descripcion', 'rendimiento', 'unidad', 'precio', 'subTotal', 'delete'];
+  displayedColumns: string[] = ['codigo', 'descripcion', 'rendimiento', 'desperdicio', 'unidad', 'precio', 'subTotal', 'delete'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -80,6 +80,7 @@ export class TableComponent implements OnInit {
     this.detalles.push(detalle);
     const row = this.formBuilder.group({
       rendimiento: [(detalle) ? detalle.rendimiento : 1],
+      desperdicio: [(detalle) ? detalle.desperdicio : 0.0]
     });
     this.detallesForm.push(row);
     this.data = [...this.detalles];
@@ -97,17 +98,23 @@ export class TableComponent implements OnInit {
     this.save.emit(this.data);
   }
 
-  applyChanges(rendimiento, index) {
-    this.data[index].rendimiento = parseFloat(rendimiento);
+  calcularDesperdicio(desperdicio, index) {
+    this.data[index].desperdicio = Number(desperdicio);
     this.calcularSubTotal(this.data[index]);
-    console.log(this.data[index]);
+    this.getTotal();
+  }
+
+  calcularRendimiento(rendimiento, index) {
+    this.data[index].rendimiento = Number(rendimiento);
+    this.calcularSubTotal(this.data[index]);
     this.getTotal();
   }
 
   calcularSubTotal(detalle: Detalle) {
     const rendimiento = detalle.rendimiento;
     const precio = detalle.precio;
-    detalle.subTotal = Math.round(precio * rendimiento);
+    const desperdicio = 1 + detalle.desperdicio / 100;
+    detalle.subTotal = Math.round(precio * rendimiento * desperdicio);
   }
 
   deleteRow(index: number, detalleId: number) {

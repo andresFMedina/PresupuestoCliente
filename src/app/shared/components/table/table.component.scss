@@ -3,8 +3,8 @@ table {
   margin-bottom: 15px;
 }
 
-mat-form-field {
-  width: 30%;
+.mat-form-field {
+  width: 95%;
 }
 
 .mat-cell {
@@ -16,5 +16,9 @@ mat-form-field {
 }
 
 .mat-column-rendimiento {
-    width: 70px;
+    max-width: 100px;
+}
+
+.mat-column-desperdicio {
+  max-width: 100px;
 }

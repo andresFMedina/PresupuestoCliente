@@ -23,11 +23,23 @@
             <th mat-header-cell *matHeaderCellDef> Rendimiento </th>
             <td mat-cell class="rendimiento" *matCellDef="let item; let index = index" [formGroupName]="index">
                 <mat-form-field>
-                    <input matInput formControlName="rendimiento" (keyup)="applyChanges($event.target.value, index)" placeholder="Rendimiento" type="number">
+                    <input matInput formControlName="rendimiento" (keyup)="calcularRendimiento($event.target.value, index)" placeholder="Rendimiento" type="number">
                 </mat-form-field>
             </td>
             <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
+
+        <!--Columna desperdicio-->
+        <ng-container matColumnDef="desperdicio">
+            <th mat-header-cell *matHeaderCellDef> Desperdicio </th>
+            <td mat-cell class="rendimiento" *matCellDef="let item; let index = index" [formGroupName]="index">
+                <mat-form-field>
+                    <input matInput formControlName="desperdicio" (keyup)="calcularDesperdicio($event.target.value, index)" placeholder="Desperdicio" type="number">
+                </mat-form-field>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
 
         <!--Columna unidad-->
         <ng-container matColumnDef="unidad">

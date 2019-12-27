@@ -103,6 +103,7 @@ export class BudgetComponent implements OnInit {
       unidad: recurso.unidad,
       precio: recurso.precio,
       rendimiento: 1,
+      desperdicio: 0.0,
       detalleDe: 'recurso',
       subTotal: recurso.precio
     };
@@ -118,6 +119,7 @@ export class BudgetComponent implements OnInit {
       unidad: analysis.unidad,
       precio: analysis.valorUnitario,
       rendimiento: 1,
+      desperdicio: 0,
       detalleDe: 'analisis',
       subTotal: analysis.valorUnitario,
     };

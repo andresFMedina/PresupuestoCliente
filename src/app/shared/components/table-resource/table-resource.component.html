@@ -8,7 +8,7 @@
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
         </mat-form-field>
-        <button (click)="openDialogResources()" mat-raised-button> Crear nuevo Recurso Básico</button>
+        <button mat-raised-button (click)="openDialogResources()"> Crear nuevo Recurso Básico</button>
         <table mat-table [dataSource]='resources' class="mat-elevation-z8">
             <!--Columna codigo-->
             <ng-container matColumnDef="codigo" class="mat-column">

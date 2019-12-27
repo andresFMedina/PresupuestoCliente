@@ -75,6 +75,7 @@ export class AnalysisComponent implements OnInit {
       unidad: recurso.unidad,
       precio: recurso.precio,
       rendimiento: 1,
+      desperdicio: 0.0,
       detalleDe: 'recurso',
       subTotal: recurso.precio
     };
