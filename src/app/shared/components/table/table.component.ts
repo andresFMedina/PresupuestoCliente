@@ -136,7 +136,7 @@ export class TableComponent implements OnInit {
       (error) => {
         console.error(error.error);
       }
-    )
+    );
   }
 
 
