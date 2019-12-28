@@ -1,10 +1,9 @@
-import { Grupo } from './grupo.model';
 export interface RecursoBasico {
     id?: number;
     codigo: string;
     descripcion: string;
     unidad: string;
-    grupo?: Grupo;
+    grupo?: string;
     clasificacion?: string;
     precio: number;
     fecha?: string;

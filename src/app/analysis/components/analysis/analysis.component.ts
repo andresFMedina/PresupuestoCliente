@@ -1,3 +1,4 @@
+import { grupos } from './../../../core/constants';
 import { DetalleService } from './../../../core/services/detalle/detalle.service';
 import { AnalisisUnitarioService } from './../../../core/services/analisis-unitario/analisis-unitario.service';
 import { ProyectoService } from './../../../core/services/proyecto/proyecto.service';
@@ -24,6 +25,7 @@ export class AnalysisComponent implements OnInit {
   proyecto: Proyecto;
   id = 0;
   isProcesing = false;
+  grupos = grupos;
 
   @ViewChild(TableComponent, { static: false })
   private tableComponent: TableComponent;
@@ -62,6 +64,7 @@ export class AnalysisComponent implements OnInit {
       codigo: [(this.analisisUnitario) ? this.analisisUnitario.codigo : '', [Validators.required]],
       descripcion: [(this.analisisUnitario) ? this.analisisUnitario.descripcion : '', [Validators.required]],
       unidad: [(this.analisisUnitario) ? this.analisisUnitario.unidad : '', [Validators.required]],
+      grupo: [(this.analisisUnitario) ? this.analisisUnitario.grupo : '', [Validators.required]],
     });
   }
 
@@ -76,6 +79,7 @@ export class AnalysisComponent implements OnInit {
       precio: recurso.precio,
       rendimiento: 1,
       desperdicio: 0.0,
+      grupo: recurso.grupo,
       detalleDe: 'recurso',
       subTotal: recurso.precio
     };
@@ -93,6 +97,7 @@ export class AnalysisComponent implements OnInit {
       unidad: this.form.get('unidad').value,
       detalles: null,
       proyectoId: this.proyecto.id,
+      grupo: this.form.get('grupo').value,
       valorUnitario: Math.round(valorUnitario)
     };
     console.log(analisisUnitario);

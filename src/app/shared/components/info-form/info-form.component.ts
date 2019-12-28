@@ -44,7 +44,6 @@ export class InfoFormComponent implements OnInit {
       porcentaje_Menor: this.form.get('tool').value,
       porcentaje_Prestaciones_Sociales: this.form.get('benefits').value,
       desperdicio_Materiales: this.form.get('waste').value,
-      grupos: []
     };
     console.log(proyecto);
     this.proyectoService.postProyecto(proyecto).subscribe(

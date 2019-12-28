@@ -1,5 +1,4 @@
 import { Detalle } from './detalle';
-import { Grupo } from './grupo.model';
 import { Proyecto } from './proyecto.model';
 
 export interface AnalisisUnitario {
@@ -9,7 +8,7 @@ export interface AnalisisUnitario {
     codigo: string;
     descripcion: string;
     unidad: string;
-    grupo?: Grupo;
+    grupo?: string;
     clasificacion?: string;
     valorUnitario: number;
     detalles: Detalle[];

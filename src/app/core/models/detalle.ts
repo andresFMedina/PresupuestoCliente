@@ -12,6 +12,7 @@ export interface Detalle {
     descripcion: string;
     unidad: string;
     precio: number;
+    grupo?: string;
     desperdicio: number;
     detalleDe: string;
     subTotal?: number;

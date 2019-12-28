@@ -14,6 +14,18 @@
                             <input matInput placeholder="Código del Recurso" formControlName="codigo">
                         </mat-form-field>
                     </div>
+                    <div class="col">
+                        <mat-form-field>
+                            <mat-label>
+                                Grupo
+                            </mat-label>
+                            <mat-select formControlName="grupo">
+                                <mat-option *ngFor="let grupo of grupos" [value]="grupo.codigo">
+                                    {{grupo.nombre}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">

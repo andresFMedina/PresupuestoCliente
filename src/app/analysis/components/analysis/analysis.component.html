@@ -14,9 +14,23 @@
                                 <input placeholder="Codigo" formControlName="codigo" matInput type="text">
                             </mat-form-field>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <mat-form-field class="full-width">
-                                <input placeholder="Unidad" formControlName="unidad" matInput type="text">
+                                <input placeholder="Codigo" formControlName="codigo" matInput type="text">
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field>
+                                <mat-label>
+                                    Grupo
+                                </mat-label>
+                                <mat-select formControlName="grupo">
+                                    <mat-option *ngFor="let grupo of grupos" [value]="grupo.codigo">
+                                        {{grupo.nombre}}
+                                    </mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
@@ -30,7 +44,8 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <app-table (save)="createAnalisis($event)" [isProcesing]="isProcesing" [analisisId]="id"></app-table>
+                            <app-table (save)="createAnalisis($event)" [isProcesing]="isProcesing" [analisisId]="id">
+                            </app-table>
                         </div>
                     </div>
 

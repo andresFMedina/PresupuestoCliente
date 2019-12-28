@@ -1,3 +1,4 @@
+import { grupos } from './../../../core/constants';
 import { RecursoBasicoService } from './../../../core/services/recurso-basico/recurso-basico.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
@@ -13,7 +14,7 @@ export class DialogResourceComponent implements OnInit {
   @Input() recursoBasico: RecursoBasico;
 
   form: FormGroup;
-
+  grupos = grupos;
 
   constructor(
     private fb: FormBuilder,
@@ -26,6 +27,7 @@ export class DialogResourceComponent implements OnInit {
       descripcion: [(!this.recursoBasico) ? null : this.recursoBasico.descripcion, Validators.required],
       unidad: [(!this.recursoBasico) ? null : this.recursoBasico.unidad, Validators.required],
       precio: [(!this.recursoBasico) ? null : this.recursoBasico.precio],
+      grupo: [(!this.recursoBasico) ? null : this.recursoBasico.grupo],
     });
   }
 
@@ -36,6 +38,7 @@ export class DialogResourceComponent implements OnInit {
       descripcion: this.form.get('descripcion').value,
       unidad: this.form.get('unidad').value,
       precio: Number(this.form.get('precio').value),
+      grupo: this.form.get('grupo').value
     };
     console.log(recursoBasico);
     this.recursoBasicoService.postRecursoBasico(recursoBasico).subscribe(
