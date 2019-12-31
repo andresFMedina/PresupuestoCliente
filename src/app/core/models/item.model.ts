@@ -12,7 +12,7 @@ export interface Item {
     cantidad: number;
     frente?: number;
     actividad?: number;
-    aporte: string;
+    aporte: number;
     detalles: Detalle[];
     valorUnitario: number;
     valorParcial?: number;

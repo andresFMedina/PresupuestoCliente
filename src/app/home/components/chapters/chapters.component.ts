@@ -5,7 +5,10 @@ import { ItemService } from 'src/app/core/services/item/item.service';
 import { Capitulo } from './../../../core/models/capitulo.model';
 import { Item } from './../../../core/models/item.model';
 import { Proyecto } from './../../../core/models/proyecto.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { compareNumbers } from 'src/app/core/constants';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-chapters',
@@ -17,9 +20,11 @@ export class ChaptersComponent implements OnInit {
   data: Item[] = [];
   proyecto: Proyecto;
   resultsLength: number;
-  capitulos: Capitulo[];
+  dataSource: MatTableDataSource<Item>;
 
   displayedColumns = ['codigo', 'descripcion', 'unidad', 'cantidad', 'precio', 'parcial', 'aporte'];
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private itemService: ItemService,
@@ -39,20 +44,19 @@ export class ChaptersComponent implements OnInit {
       )
       .subscribe(
         (capitulos) => {
-          this.capitulos = capitulos.model;
-          this.capitulos.forEach(c => this.startData(c));
+          capitulos.model.forEach(c => this.startData(c));
         },
         (error) => {
           console.log(error.error);
         }
-      );
+      );    
   }
 
   startData(capitulo: Capitulo) {
     const itemCapitulo: Item = {
       id: 0,
       descripcion: capitulo.descripcion,
-      aporte: '',
+      aporte: 0,
       cantidad: null,
       codigo: '',
       proyectoId: this.proyecto.id,
@@ -61,18 +65,19 @@ export class ChaptersComponent implements OnInit {
       valorUnitario: null,
       numeroCapitulo: capitulo.numero,
     };
-    this.items.push(itemCapitulo);
+    // this.data = [...this.items];
     this.itemService.getItemByCapituloId(capitulo.id).subscribe(
       (items) => {
-        console.log(items);
+        this.items.push(itemCapitulo);
         items.model.forEach((i) => {
           i.valorParcial = i.valorUnitario * i.cantidad;
-          i.numeroCapitulo = Number(`${capitulo.id}.${i.numeroCapitulo}`);
-          console.log(i);
+          i.numeroCapitulo = Number(`${capitulo.numero}.${i.numeroCapitulo}`);
           this.items.push(i);
-          this.data = [...this.items];
         });
-        console.log(this.data);
+        this.data = [...this.items];
+        this.data.sort((item1, item2) => compareNumbers(item1.numeroCapitulo, item2.numeroCapitulo));
+        this.dataSource = new MatTableDataSource(this.data);
+        this.dataSource.paginator = this.paginator;
       },
       (error) => {
         console.error(error.error);

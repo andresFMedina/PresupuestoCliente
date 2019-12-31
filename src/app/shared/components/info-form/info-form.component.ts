@@ -28,8 +28,6 @@ export class InfoFormComponent implements OnInit {
       endDate: [(!this.proyecto) ? null : this.getDate(this.proyecto.fecha_Presentacion), Validators.required],
       editDate: [(!this.proyecto) ? new Date() : this.getDate(this.proyecto.fecha_Modificacion), Validators.required],
       tool: [(!this.proyecto) ? null : this.proyecto.porcentaje_Menor, Validators.required],
-      benefits: [(!this.proyecto) ? null : this.proyecto.porcentaje_Prestaciones_Sociales, Validators.required],
-      waste: [(!this.proyecto) ? null : this.proyecto.desperdicio_Materiales, Validators.required],
     });
   }
 
@@ -41,9 +39,7 @@ export class InfoFormComponent implements OnInit {
       comentarios: this.form.get('comments').value,
       fecha_Presentacion: this.form.get('endDate').value.toISOString(),
       fecha_Modificacion: this.form.get('editDate').value.toISOString(),
-      porcentaje_Menor: this.form.get('tool').value,
-      porcentaje_Prestaciones_Sociales: this.form.get('benefits').value,
-      desperdicio_Materiales: this.form.get('waste').value,
+      porcentaje_Menor: this.form.get('tool').value
     };
     console.log(proyecto);
     this.proyectoService.postProyecto(proyecto).subscribe(

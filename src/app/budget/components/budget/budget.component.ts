@@ -12,7 +12,6 @@ import { RecursoBasicoService } from './../../../core/services/recurso-basico/re
 import { RecursoBasico } from './../../../core/models/recurso-basico.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import Listado from '../../../../assets/Listado_Precios.json';
 
 @Component({
   selector: 'app-budget',
@@ -67,21 +66,20 @@ export class BudgetComponent implements OnInit {
       descripcion: [(this.item) ? this.item.descripcion : '', [Validators.required]],
       unidad: [(this.item) ? this.item.unidad : '', [Validators.required]],
       cantidad: [(this.item) ? this.item.cantidad : '', [Validators.required]],
-      aporte: [(this.item) ? this.item.aporte : '', [Validators.required]],
     });
   }
 
   createItem(detalles: Detalle[]) {
     this.isProcesing = true;
     console.log(detalles);
-    const valorUnitario = detalles.map(d => d.subTotal).reduce((acc, value) => acc + value, 0);
+    const valorUnitario = (detalles) ? this.getValorUnitario(detalles) : 0;
     const item: Item = {
       id: Number(this.id),
       codigo: this.form.get('codigo').value,
       descripcion: this.form.get('descripcion').value,
       unidad: this.form.get('unidad').value,
       cantidad: this.form.get('cantidad').value,
-      aporte: this.form.get('aporte').value,
+      aporte: 0,
       detalles: null,
       proyectoId: this.proyecto.id,
       valorUnitario: Math.round(valorUnitario)
@@ -91,6 +89,10 @@ export class BudgetComponent implements OnInit {
     } else {
       this.putItem(item, detalles);
     }
+  }
+
+  getValorUnitario(detalles: Detalle[]) {
+    return detalles.map(d => d.subTotal).reduce((acc, value) => acc + value, 0);
   }
 
   addResource(recurso: RecursoBasico) {
@@ -165,13 +167,15 @@ export class BudgetComponent implements OnInit {
         this.isProcesing = false;
       }
     );
-    detalles.forEach((d) => {
-      if (d.id === 0) {
-        this.postDetalle(d, this.id);
-      } else {
-        this.putDetalle(d);
-      }
-    });
+    if (detalles) {
+      detalles.forEach((d) => {
+        if (d.id === 0) {
+          this.postDetalle(d, this.id);
+        } else {
+          this.putDetalle(d);
+        }
+      });
+    }
   }
 
   postDetalle(detalle: Detalle, id: number) {

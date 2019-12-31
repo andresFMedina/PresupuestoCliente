@@ -14,7 +14,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 export class TableResourceComponent implements OnInit, AfterViewInit {
 
 
-  displayedColumns: string[] = ['codigo', 'descripcion', 'unidad', 'precio'];
+  displayedColumns: string[] = ['codigo', 'descripcion', 'unidad', 'precio', 'edit'];
   resources: RecursoBasico[];
   @Output() recursoSelected = new EventEmitter<RecursoBasico>();
 
@@ -59,9 +59,10 @@ export class TableResourceComponent implements OnInit, AfterViewInit {
     this.recursoSelected.emit(recursoBasico);
   }
 
-  openDialogResources() {
+  openDialogResources(recursoBasico?: RecursoBasico) {
     const dialogRef = this.dialog.open(DialogResourceComponent, {
-      width: '600px'
+      width: '600px',
+      data: recursoBasico
     });
 
     dialogRef.beforeClosed().subscribe(

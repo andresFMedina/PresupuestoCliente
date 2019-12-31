@@ -8,7 +8,7 @@
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
         </mat-form-field>
-        <button mat-raised-button (click)="openDialogResources()"> Crear nuevo Recurso Básico</button>
+        <button mat-raised-button (click)="openDialogResources(null)"> Crear nuevo Recurso Básico</button>
         <table mat-table [dataSource]='resources' class="mat-elevation-z8">
             <!--Columna codigo-->
             <ng-container matColumnDef="codigo" class="mat-column">
@@ -32,6 +32,17 @@
             <ng-container matColumnDef="precio" class="mat-column">
                 <th mat-header-cell *matHeaderCellDef> Precio </th>
                 <td mat-cell *matCellDef="let item">{{(item.precio | currency)}}</td>
+            </ng-container>
+
+            <!--Columna Precio Unidad-->
+            <ng-container matColumnDef="edit" class="mat-column">    
+                <th mat-header-cell *matHeaderCellDef> Editar </th>            
+                <td mat-cell *matCellDef="let item">
+                    <button mat-icon-button
+                        (click)="openDialogResources(item)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef=displayedColumns></tr>

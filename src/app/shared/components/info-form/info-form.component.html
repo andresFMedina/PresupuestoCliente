@@ -54,35 +54,19 @@
               First name is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Prestaciones Sociales" formControlName="benefits" type="number">
-            <mat-error *ngIf="form.controls['proponent'].hasError('required')">
-              Last name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Desperdicio Materiales" formControlName="waste" type="number">
-            <mat-error *ngIf="form.controls['proponent'].hasError('required')">
-              Last name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
+        </div>        
       </div>
       <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
-              <textarea matInput placeholder="Herramienta Menor" formControlName="comments"></textarea>              
+              <textarea matInput placeholder="Comentarios" formControlName="comments"></textarea>              
             </mat-form-field>
           </div>          
         </div>
       
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Guardar</button>
     </mat-card-actions>
   </mat-card>
 </form>

@@ -46,7 +46,7 @@ export class ChapterComponent implements OnInit {
     );
     this.route.params
       .pipe(switchMap((params: Params) => {
-        this.id = params.id;
+        this.id = (params.id) ? Number(params.id) : 0;
         console.log(this.id);
         return this.capituloService.getCapituloById(params.id);
       }))
