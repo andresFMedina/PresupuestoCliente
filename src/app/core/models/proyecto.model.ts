@@ -6,5 +6,4 @@ export interface Proyecto {
     fecha_Presentacion: string;
     fecha_Modificacion: string;
     comentarios: string;
-    porcentaje_Menor: number;    
 }

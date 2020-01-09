@@ -1,8 +1,9 @@
 import { Capitulo } from './capitulo.model';
 import { Detalle } from './detalle';
 import { Proyecto } from './proyecto.model';
+import { CostosMateriales } from './costos-materiales.interface';
 
-export interface Item {
+export interface Item extends CostosMateriales {
     id: number;
     proyectoId: number;
     proyecto?: Proyecto;

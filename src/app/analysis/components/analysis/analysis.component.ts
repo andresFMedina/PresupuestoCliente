@@ -1,3 +1,4 @@
+import { CostosMateriales } from './../../../core/models/costos-materiales.interface';
 import { grupos } from './../../../core/constants';
 import { DetalleService } from './../../../core/services/detalle/detalle.service';
 import { AnalisisUnitarioService } from './../../../core/services/analisis-unitario/analisis-unitario.service';
@@ -12,6 +13,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { ActivatedRoute, Params } from '@angular/router';
+import { calcularCostoMaterialesDetalles } from 'src/app/core/utils/calcular-costos';
 
 @Component({
   selector: 'app-analysis',
@@ -81,7 +83,7 @@ export class AnalysisComponent implements OnInit {
       desperdicio: 0.0,
       grupo: recurso.grupo,
       detalleDe: 'recurso',
-      subTotal: recurso.precio
+      subTotal: recurso.precio,
     };
     this.tableComponent.addRow(detalle, true);
   }
@@ -89,6 +91,7 @@ export class AnalysisComponent implements OnInit {
   createAnalisis(detalles: Detalle[]) {
     this.isProcesing = true;
     console.log(detalles);
+    const costos: CostosMateriales = calcularCostoMaterialesDetalles(detalles);
     const valorUnitario = detalles.map(d => d.subTotal).reduce((acc, value) => acc + value, 0);
     const analisisUnitario: AnalisisUnitario = {
       id: Number(this.id),
@@ -98,8 +101,11 @@ export class AnalysisComponent implements OnInit {
       detalles: null,
       proyectoId: this.proyecto.id,
       grupo: this.form.get('grupo').value,
-      valorUnitario: Math.round(valorUnitario)
-    };
+      valorUnitario: Math.round(valorUnitario),
+      costoMateriales: costos.costoMateriales,
+      costoEquipo: costos.costoEquipo,
+      costoManoObra: costos.costoManoObra
+};
     console.log(analisisUnitario);
     if (this.id === 0) {
       this.postAnalysis(analisisUnitario, detalles);

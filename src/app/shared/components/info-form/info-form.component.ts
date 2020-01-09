@@ -26,8 +26,7 @@ export class InfoFormComponent implements OnInit {
       proponent: [(!this.proyecto) ? null : this.proyecto.proponente, Validators.required],
       comments: [(!this.proyecto) ? null : this.proyecto.comentarios],
       endDate: [(!this.proyecto) ? null : this.getDate(this.proyecto.fecha_Presentacion), Validators.required],
-      editDate: [(!this.proyecto) ? new Date() : this.getDate(this.proyecto.fecha_Modificacion), Validators.required],
-      tool: [(!this.proyecto) ? null : this.proyecto.porcentaje_Menor, Validators.required],
+      editDate: [(!this.proyecto) ? new Date() : this.getDate(this.proyecto.fecha_Modificacion), Validators.required]
     });
   }
 
@@ -39,13 +38,13 @@ export class InfoFormComponent implements OnInit {
       comentarios: this.form.get('comments').value,
       fecha_Presentacion: this.form.get('endDate').value.toISOString(),
       fecha_Modificacion: this.form.get('editDate').value.toISOString(),
-      porcentaje_Menor: this.form.get('tool').value
     };
     console.log(proyecto);
     this.proyectoService.postProyecto(proyecto).subscribe(
       (response) => {
         console.log(response);
         alert('Creado');
+        this.proyectoService.setCurrentProject(response.model);
       },
       (error) => {
         console.error(error.error);

@@ -1,3 +1,4 @@
+import { CostosMateriales } from './../../../core/models/costos-materiales.interface';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DetalleService } from './../../../core/services/detalle/detalle.service';
@@ -12,6 +13,7 @@ import { RecursoBasicoService } from './../../../core/services/recurso-basico/re
 import { RecursoBasico } from './../../../core/models/recurso-basico.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { calcularCostoMaterialesDetalles } from 'src/app/core/utils/calcular-costos';
 
 @Component({
   selector: 'app-budget',
@@ -73,6 +75,7 @@ export class BudgetComponent implements OnInit {
     this.isProcesing = true;
     console.log(detalles);
     const valorUnitario = (detalles) ? this.getValorUnitario(detalles) : 0;
+    const costos: CostosMateriales = calcularCostoMaterialesDetalles(detalles);
     const item: Item = {
       id: Number(this.id),
       codigo: this.form.get('codigo').value,
@@ -82,7 +85,10 @@ export class BudgetComponent implements OnInit {
       aporte: 0,
       detalles: null,
       proyectoId: this.proyecto.id,
-      valorUnitario: Math.round(valorUnitario)
+      valorUnitario: Math.round(valorUnitario),
+      costoMateriales: costos.costoMateriales,
+      costoEquipo: costos.costoEquipo,
+      costoManoObra: costos.costoManoObra
     };
     if (this.id === 0) {
       this.postItem(item, detalles);
@@ -105,6 +111,7 @@ export class BudgetComponent implements OnInit {
       unidad: recurso.unidad,
       precio: recurso.precio,
       rendimiento: 1,
+      grupo: recurso.grupo,
       desperdicio: 0.0,
       detalleDe: 'recurso',
       subTotal: recurso.precio

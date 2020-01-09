@@ -1,3 +1,4 @@
+import { CostosMateriales } from './../../../core/models/costos-materiales.interface';
 import { switchMap } from 'rxjs/operators';
 import { ItemTableComponent } from './../../../shared/components/item-table/item-table.component';
 import { Item } from './../../../core/models/item.model';
@@ -10,6 +11,7 @@ import { ProyectoService } from 'src/app/core/services/proyecto/proyecto.service
 import { CapituloService } from 'src/app/core/services/capitulo/capitulo.service';
 import { ItemService } from 'src/app/core/services/item/item.service';
 import { Params, ActivatedRoute } from '@angular/router';
+import { calcularCostoMaterialesItems } from 'src/app/core/utils/calcular-costos';
 
 @Component({
   selector: 'app-chapter',
@@ -74,13 +76,17 @@ export class ChapterComponent implements OnInit {
   createCapitulo(items: Item[]) {
     this.isProcesing = true;
     console.log(items);
+    const costos: CostosMateriales = calcularCostoMaterialesItems(items);
     const subtotal = items.map(i => i.valorParcial).reduce((acc, value) => acc + value, 0);
     const capitulo: Capitulo = {
       id: Number(this.id),
       proyectoId: this.proyecto.id,
       numero: parseInt(this.form.get('numero').value, 10),
       descripcion: this.form.get('descripcion').value,
-      subtotal: Math.round(subtotal)
+      subtotal: Math.round(subtotal),
+      costoEquipo: costos.costoEquipo,
+      costoManoObra: costos.costoManoObra,
+      costoMateriales: costos.costoMateriales
     };
     console.log(capitulo);
     if (this.id === 0) {

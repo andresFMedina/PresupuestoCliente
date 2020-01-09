@@ -4,9 +4,10 @@
             Items
         </mat-card-title>
         <a mat-button color="primary" [routerLink]="['/budget/create']">CREAR NUEVO ITEM</a>
+        <button mat-button color="primary" (click)="getDetails()">Exportar a Excel</button>        
     </mat-card-header>
     <mat-card-content>
-        <table mat-table [dataSource]=items class="mat-elevation-z8">
+        <table *ngIf="!showDetails" mat-table [dataSource]=items class="mat-elevation-z8">
             <!--Columna codigo-->
             <ng-container matColumnDef="codigo">
                 <th mat-header-cell *matHeaderCellDef> Código </th>
@@ -82,6 +83,7 @@
             <tr mat-header-row *matHeaderRowDef=displayedColumns></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <app-table-details *ngIf="showDetails" [detalles]="detalles"></app-table-details>
     </mat-card-content>
     
 </mat-card>

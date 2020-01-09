@@ -1,0 +1,80 @@
+<button mat-button (click)="exportTable()">Export</button>
+<table id="table-detail" mat-table [dataSource]=detalles class="mat-elevation-z8">
+    <!--Columna codigo-->
+    <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef> Código </th>
+        <td mat-cell *matCellDef="let detalle">
+            <div *ngIf="detalle.id === 0" class="item-column">{{detalle.codigo}}</div>
+            <div *ngIf="detalle.id !== 0">{{detalle.codigo}}</div>                    
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!--Columna Descripcion-->
+    <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef> Descripción </th>
+        <td mat-cell *matCellDef="let detalle">
+            <div *ngIf="detalle.id === 0" class="item-column">{{detalle.descripcion}}</div>
+            <div *ngIf="detalle.id !== 0">{{detalle.descripcion}}</div>                        
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!--Columna rendimiento-->
+    <ng-container matColumnDef="rendimiento">
+        <th mat-header-cell *matHeaderCellDef> Rendimiento </th>
+        <td mat-cell class="rendimiento" *matCellDef="let detalle">
+            <div *ngIf="detalle.id === 0" class="item-column">{{detalle.rendimiento}}</div>
+            <div *ngIf="detalle.id !== 0">{{detalle.rendimiento}}</div>                    
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!--Columna desperdicio-->
+    <ng-container matColumnDef="desperdicio">
+        <th mat-header-cell *matHeaderCellDef> Desperdicio </th>
+        <td mat-cell class="rendimiento" *matCellDef="let detalle">
+            <div *ngIf="detalle.id === 0" class="item-column">{{detalle.desperdicio}}</div>
+            <div *ngIf="detalle.id !== 0">{{detalle.desperdicio}}</div>                    
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+
+    <!--Columna unidad-->
+    <ng-container matColumnDef="unidad">
+        <th mat-header-cell *matHeaderCellDef> Unidad </th>
+        <td mat-cell *matCellDef="let detalle">
+            <div *ngIf="detalle.id === 0" class="item-column">{{detalle.unidad}}</div>
+            <div *ngIf="detalle.id !== 0">{{detalle.unidad}}</div>                    
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!--Columna Precio Unidad-->
+    <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef> Precio Unidad </th>
+        <td mat-cell *matCellDef="let detalle">
+            <div *ngIf="detalle.id === 0" class="item-column">{{(detalle.precio | currency)}}</div>
+            <div *ngIf="detalle.id !== 0">{{(detalle.precio | currency)}}</div>                    
+            
+        </td>
+        <td mat-footer-cell *matFooterCellDef> Total </td>
+    </ng-container>
+
+    <!--Columna Subtotal-->
+    <ng-container matColumnDef="subTotal">
+        <th mat-header-cell *matHeaderCellDef> Subtotal </th>
+        <td mat-cell *matCellDef="let detalle">
+            <div *ngIf="detalle.id === 0" class="item-column">{{(detalle.subTotal | currency)}}</div>
+            <div *ngIf="detalle.id !== 0">{{(detalle.subTotal | currency)}}</div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef> {{total | currency}} </td>
+    </ng-container>
+    
+
+    <tr mat-header-row *matHeaderRowDef=displayedColumns></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+
+</table>

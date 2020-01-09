@@ -12,7 +12,9 @@ import { DialogCreateComponent } from './components/dialog-create/dialog-create.
 import { TableAnalysisComponent } from './components/table-analysis/table-analysis.component';
 import { ItemTableComponent } from './components/item-table/item-table.component';
 import { DialogResourceComponent } from './components/dialog-resource/dialog-resource.component';
-
+import { TableDetailsComponent } from './components/table-details/table-details.component';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { CdkTableExporterModule } from 'cdk-table-exporter';
 
 
 
@@ -26,13 +28,16 @@ import { DialogResourceComponent } from './components/dialog-resource/dialog-res
     TableAnalysisComponent,
     ItemTableComponent,
     TableCostComponent,
-    DialogResourceComponent
+    DialogResourceComponent,
+    TableDetailsComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    MatTableExporterModule,
+    CdkTableExporterModule
   ],
   exports: [
     NavComponent,
@@ -41,7 +46,8 @@ import { DialogResourceComponent } from './components/dialog-resource/dialog-res
     InfoFormComponent,
     TableAnalysisComponent,
     ItemTableComponent,
-    TableCostComponent
+    TableCostComponent,
+    TableDetailsComponent
   ]
 })
 export class SharedModule { }

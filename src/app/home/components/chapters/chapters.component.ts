@@ -49,7 +49,7 @@ export class ChaptersComponent implements OnInit {
         (error) => {
           console.log(error.error);
         }
-      );    
+      );
   }
 
   startData(capitulo: Capitulo) {
@@ -64,6 +64,9 @@ export class ChaptersComponent implements OnInit {
       detalles: null,
       valorUnitario: null,
       numeroCapitulo: capitulo.numero,
+      costoEquipo: capitulo.costoEquipo,
+      costoMateriales: capitulo.costoMateriales,
+      costoManoObra: capitulo.costoManoObra
     };
     // this.data = [...this.items];
     this.itemService.getItemByCapituloId(capitulo.id).subscribe(
@@ -72,7 +75,7 @@ export class ChaptersComponent implements OnInit {
         items.model.forEach((i) => {
           i.valorParcial = i.valorUnitario * i.cantidad;
           i.numeroCapitulo = Number(`${capitulo.numero}.${i.numeroCapitulo}`);
-          this.items.push(i);
+          this.items.push(i); 
         });
         this.data = [...this.items];
         this.data.sort((item1, item2) => compareNumbers(item1.numeroCapitulo, item2.numeroCapitulo));
