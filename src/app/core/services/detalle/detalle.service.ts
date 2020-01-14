@@ -21,6 +21,10 @@ export class DetalleService {
     return this.http.get<ListResponse<Detalle>>(`${this.urlApi}?itemId=${id}`);
   }
 
+  getDetallesByProyectoId(id: number) {
+    return this.http.get<ListResponse<Detalle>>(`${this.urlApi}/listado?proyectoId=${id}`);
+  }
+
   putDetalle(changes: Detalle) {
     return this.http.put<Response>(`${this.urlApi}/${changes.id}`, changes);
   }

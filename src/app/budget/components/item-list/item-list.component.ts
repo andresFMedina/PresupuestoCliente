@@ -8,6 +8,7 @@ import { Item } from './../../../core/models/item.model';
 import { Component, OnInit } from '@angular/core';
 import { AdaptDetail } from 'src/app/core/utils/adapter-to-detalle';
 import { MatTableExporterDirective } from 'mat-table-exporter';
+import { calcularSubtotalDetalle } from 'src/app/core/utils/calcular-costos';
 
 @Component({
   selector: 'app-item-list',

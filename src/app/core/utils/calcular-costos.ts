@@ -39,3 +39,7 @@ export function calcularCostoMaterialesItems(items: Item[]): CostosMateriales {
     return costos;
 }
 
+export function calcularSubtotalDetalle(detalle: Detalle) {
+    detalle.subTotal = detalle.rendimiento * detalle.precio;
+}
+

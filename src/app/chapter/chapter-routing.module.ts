@@ -1,3 +1,4 @@
+import { ResourcesListComponent } from './components/resources-list/resources-list.component';
 import { ChapterComponent } from './components/chapter/chapter.component';
 import { ChapterListComponent } from './components/chapter-list/chapter-list.component';
 import { NgModule } from '@angular/core';
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: ChapterComponent
+  },
+  {
+    path: 'resources-list',
+    component: ResourcesListComponent
   },
 ];
 

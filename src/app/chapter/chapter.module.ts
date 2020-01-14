@@ -8,10 +8,11 @@ import { ChapterListComponent } from './components/chapter-list/chapter-list.com
 import { ChapterTableComponent } from './components/chapter-table/chapter-table.component';
 import { SharedModule } from '../shared/shared.module';
 import { ChapterComponent } from './components/chapter/chapter.component';
+import { ResourcesListComponent } from './components/resources-list/resources-list.component';
 
 
 @NgModule({
-  declarations: [ChapterListComponent, ChapterTableComponent, ChapterComponent],
+  declarations: [ChapterListComponent, ChapterTableComponent, ChapterComponent, ResourcesListComponent],
   imports: [
     CommonModule,
     ChapterRoutingModule,
