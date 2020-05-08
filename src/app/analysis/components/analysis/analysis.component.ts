@@ -10,10 +10,13 @@ import { AnalisisUnitario } from './../../../core/models/analisis-unitario.model
 import { RecursoBasico } from './../../../core/models/recurso-basico.model';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { ActivatedRoute, Params } from '@angular/router';
 import { calcularCostoMaterialesDetalles } from 'src/app/core/utils/calcular-costos';
+import { MatSnackBar } from '@angular/material';
+import { createDefaultSnackbar } from 'src/app/core/utils/snackbar-config';
+import { postDetalle, putDetalle } from 'src/app/shared/functions/detalle-fetch';
+import { recursoBasicoADetalle } from 'src/app/shared/functions/table-component-utils';
 
 @Component({
   selector: 'app-analysis',
@@ -37,7 +40,8 @@ export class AnalysisComponent implements OnInit {
     private proyectoService: ProyectoService,
     private analisisUnitarioService: AnalisisUnitarioService,
     private detalleService: DetalleService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackbar: MatSnackBar
   ) {
     this.buildForm();
   }
@@ -73,20 +77,8 @@ export class AnalysisComponent implements OnInit {
   }
 
   addResource(recurso: RecursoBasico) {
-    console.log(recurso);
-    const detalle: Detalle = {
-      id: 0,
-      analisisUnitarioId: (this.analisisUnitario) ? this.id : 0,
-      codigo: recurso.codigo,
-      descripcion: recurso.descripcion,
-      unidad: recurso.unidad,
-      precio: recurso.precio,
-      rendimiento: 1,
-      desperdicio: 0.0,
-      grupo: recurso.grupo,
-      detalleDe: 'recurso',
-      subTotal: recurso.precio,
-    };
+    const analisisId = (this.analisisUnitario) ? this.analisisUnitario.id : 0;
+    const detalle = recursoBasicoADetalle(recurso, null, analisisId);
     this.tableComponent.addRow(detalle, true);
   }
 
@@ -127,11 +119,13 @@ export class AnalysisComponent implements OnInit {
         // this.analisisUnitario = response;
         if (detalles) {
           detalles.forEach((d) => {
-            this.postDetalle(d, response.model.id);
+            postDetalle(this.detalleService, d, response.model.id);
           });
         }
         this.isProcesing = false;
         this.resetForm();
+        const message = 'Se ha creado el analisis unitario exitosamente';
+        createDefaultSnackbar(this.snackbar, message);
       },
       (error) => {
         console.error(error.error);
@@ -151,6 +145,8 @@ export class AnalysisComponent implements OnInit {
       (error) => {
         console.error(error.error);
         this.isProcesing = false;
+        const message = 'Se han guardado los cambios';
+        createDefaultSnackbar(this.snackbar, message);
       }
     );
     if (detalles === null) {
@@ -158,38 +154,11 @@ export class AnalysisComponent implements OnInit {
     }
     detalles.forEach((d) => {
       if (d.id === 0) {
-        this.postDetalle(d, this.id);
+        postDetalle(this.detalleService, d, this.id);
       } else {
-        this.putDetalle(d);
+        putDetalle(this.detalleService, d);
       }
     });
-  }
-
-  postDetalle(detalle: Detalle, id: number) {
-    detalle.analisisUnitarioId = id;
-    this.detalleService.postDetalle(detalle).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.isProcesing = false;
-      },
-      (error) => {
-        console.log(error.error);
-        this.isProcesing = false;
-      }
-    );
-  }
-
-  putDetalle(detalle: Detalle) {
-    this.detalleService.putDetalle(detalle).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.isProcesing = false;
-      },
-      (error) => {
-        console.error(error.error);
-        this.isProcesing = false;
-      }
-    );
   }
 
   resetForm() {

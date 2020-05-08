@@ -14,6 +14,10 @@ import { RecursoBasico } from './../../../core/models/recurso-basico.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { calcularCostoMaterialesDetalles } from 'src/app/core/utils/calcular-costos';
+import { MatSnackBar } from '@angular/material';
+import { createDefaultSnackbar } from 'src/app/core/utils/snackbar-config';
+import { postDetalle, putDetalle } from 'src/app/shared/functions/detalle-fetch';
+import { recursoBasicoADetalle, analisisUnitarioADetalle } from 'src/app/shared/functions/table-component-utils';
 
 @Component({
   selector: 'app-budget',
@@ -37,7 +41,8 @@ export class BudgetComponent implements OnInit {
     private proyectoService: ProyectoService,
     private itemService: ItemService,
     private detalleService: DetalleService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackbar: MatSnackBar
   ) {
     this.buildForm();
 
@@ -107,36 +112,14 @@ export class BudgetComponent implements OnInit {
   }
 
   addResource(recurso: RecursoBasico) {
-    console.log(recurso);
-    const detalle: Detalle = {
-      id: 0,
-      itemId: (this.item) ? this.item.id : 0,
-      codigo: recurso.codigo,
-      descripcion: recurso.descripcion,
-      unidad: recurso.unidad,
-      precio: recurso.precio,
-      rendimiento: 1,
-      grupo: recurso.grupo,
-      desperdicio: 0.0,
-      detalleDe: 'recurso',
-      subTotal: recurso.precio
-    };
+    const itemId = (this.item) ? this.item.id : 0;
+    const detalle = recursoBasicoADetalle(recurso, itemId);
     this.tableComponent.addRow(detalle, true);
   }
 
   addAnalysis(analysis: AnalisisUnitario) {
-    const detalle: Detalle = {
-      id: 0,
-      itemId: (this.item) ? this.item.id : 0,
-      codigo: analysis.codigo,
-      descripcion: analysis.descripcion,
-      unidad: analysis.unidad,
-      precio: analysis.valorUnitario,
-      rendimiento: 1,
-      desperdicio: 0,
-      detalleDe: 'analisis',
-      subTotal: analysis.valorUnitario,
-    };
+    const itemId = (this.item) ? this.item.id : 0;
+    const detalle = analisisUnitarioADetalle(analysis, itemId);
     this.tableComponent.addRow(detalle, true);
   }
 
@@ -157,11 +140,13 @@ export class BudgetComponent implements OnInit {
         // this.item = response;
         if (detalles) {
           detalles.forEach((d) => {
-            this.postDetalle(d, response.model.id);
+            postDetalle(this.detalleService, d, response.model.id);
           });
         }
         this.isProcesing = false;
         this.resetForm();
+        const message = 'Se ha creado el item exitosamente';
+        createDefaultSnackbar(this.snackbar, message);
       },
       (error) => {
         console.error(error.error);
@@ -176,6 +161,8 @@ export class BudgetComponent implements OnInit {
       (response) => {
         console.log(response);
         item.id = this.id;
+        const message = 'Se han guardado los cambios';
+        createDefaultSnackbar(this.snackbar, message);
         // this.item = response;
       },
       (error) => {
@@ -186,39 +173,12 @@ export class BudgetComponent implements OnInit {
     if (detalles) {
       detalles.forEach((d) => {
         if (d.id === 0) {
-          this.postDetalle(d, this.id);
+          postDetalle(this.detalleService, d, this.id);
         } else {
-          this.putDetalle(d);
+          putDetalle(this.detalleService, d);
         }
       });
     }
-  }
-
-  postDetalle(detalle: Detalle, id: number) {
-    detalle.itemId = id;
-    this.detalleService.postDetalle(detalle).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.isProcesing = false;
-      },
-      (error) => {
-        console.log(error.error);
-        this.isProcesing = false;
-      }
-    );
-  }
-
-  putDetalle(detalle: Detalle) {
-    this.detalleService.putDetalle(detalle).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.isProcesing = false;
-      },
-      (error) => {
-        console.log(error.error);
-        this.isProcesing = false;
-      }
-    );
   }
 
   resetForm() {

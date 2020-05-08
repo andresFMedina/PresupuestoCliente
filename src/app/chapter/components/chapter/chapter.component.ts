@@ -12,6 +12,8 @@ import { CapituloService } from 'src/app/core/services/capitulo/capitulo.service
 import { ItemService } from 'src/app/core/services/item/item.service';
 import { Params, ActivatedRoute } from '@angular/router';
 import { calcularCostoMaterialesItems } from 'src/app/core/utils/calcular-costos';
+import { MatSnackBar } from '@angular/material';
+import { createDefaultSnackbar } from 'src/app/core/utils/snackbar-config';
 
 @Component({
   selector: 'app-chapter',
@@ -35,7 +37,8 @@ export class ChapterComponent implements OnInit {
     private proyectoService: ProyectoService,
     private capituloService: CapituloService,
     private itemService: ItemService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackbar: MatSnackBar
   ) {
     this.buildForm();
   }
@@ -118,6 +121,8 @@ export class ChapterComponent implements OnInit {
         }
         this.isProcesing = false;
         this.resetForm();
+        const message = 'Se ha creado el capitulo exitosamente';
+        createDefaultSnackbar(this.snackbar, message);
       },
       (error) => {
         console.error(error.error);
@@ -130,6 +135,8 @@ export class ChapterComponent implements OnInit {
     this.capituloService.putCapitulo(capitulo).subscribe(
       (response) => {
         console.log(response);
+        const message = 'Se han guardado los cambios';
+        createDefaultSnackbar(this.snackbar, message);
       },
       (error) => {
         console.error(error.error);
