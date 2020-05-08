@@ -2,8 +2,11 @@
     <mat-grid-list cols="7" rowHeight="600px">
         <mat-grid-tile [colspan]="4" [rowspan]="2">
             <mat-card class="full-width full-height">
-                <mat-card-header>
+                <mat-card-header>                    
                     <mat-card-title>
+                        <button mat-icon-button [routerLink]="['/analysis']">
+                            <mat-icon>arrow_back</mat-icon>
+                          </button>
                         Análisis Unitario
                     </mat-card-title>
                 </mat-card-header>

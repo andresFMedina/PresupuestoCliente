@@ -16,6 +16,7 @@ export class NavComponent implements OnInit {
 
   opened: boolean;
   proyectos: Proyecto[];
+  proyectoActual: Proyecto;
 
   constructor(
     public dialog: MatDialog,
@@ -38,6 +39,7 @@ export class NavComponent implements OnInit {
         this.proyectos = proyectos.model;
         console.log(this.proyectos[0].nombre_Obra);
         this.setCurrentProject(this.proyectos[0]);
+        this.proyectoActual = this.proyectos[0];
       },
       (error) => {
         console.log(error);
@@ -46,6 +48,7 @@ export class NavComponent implements OnInit {
 
   setCurrentProject(proyecto: Proyecto) {
     this.proyectoService.setCurrentProject(proyecto);
+    this.proyectoActual = proyecto;
   }
 
 
