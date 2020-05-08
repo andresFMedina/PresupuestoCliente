@@ -52,7 +52,9 @@ export class AnalysisComponent implements OnInit {
       .pipe(switchMap((params: Params) => {
         this.id = (params.id) ? Number(params.id) : 0;
         console.log(this.id);
-        return this.analisisUnitarioService.getAnalisisUnitarioById(this.id);
+        if (this.id !== 0) {
+          return this.analisisUnitarioService.getAnalisisUnitarioById(this.id);
+        }
       }))
       .subscribe((analisisUnitario) => {
         this.analisisUnitario = analisisUnitario.model;
@@ -91,8 +93,12 @@ export class AnalysisComponent implements OnInit {
   createAnalisis(detalles: Detalle[]) {
     this.isProcesing = true;
     console.log(detalles);
-    const costos: CostosMateriales = calcularCostoMaterialesDetalles(detalles);
-    const valorUnitario = detalles.map(d => d.subTotal).reduce((acc, value) => acc + value, 0);
+    let costos: CostosMateriales;
+    if (detalles) {
+      costos = calcularCostoMaterialesDetalles(detalles);
+    }
+    const valorUnitario = (detalles) ?
+      detalles.map(d => d.subTotal).reduce((acc, value) => acc + value, 0) : 0;
     const analisisUnitario: AnalisisUnitario = {
       id: Number(this.id),
       codigo: this.form.get('codigo').value,
@@ -102,10 +108,10 @@ export class AnalysisComponent implements OnInit {
       proyectoId: this.proyecto.id,
       grupo: this.form.get('grupo').value,
       valorUnitario: Math.round(valorUnitario),
-      costoMateriales: costos.costoMateriales,
-      costoEquipo: costos.costoEquipo,
-      costoManoObra: costos.costoManoObra
-};
+      costoMateriales: (costos) ? costos.costoMateriales : 0,
+      costoEquipo: (costos) ? costos.costoEquipo : 0,
+      costoManoObra: (costos) ? costos.costoManoObra : 0
+    };
     console.log(analisisUnitario);
     if (this.id === 0) {
       this.postAnalysis(analisisUnitario, detalles);
@@ -119,9 +125,13 @@ export class AnalysisComponent implements OnInit {
       (response) => {
         console.log(response);
         // this.analisisUnitario = response;
-        detalles.forEach((d) => {
-          this.postDetalle(d, response.model.id);
-        });
+        if (detalles) {
+          detalles.forEach((d) => {
+            this.postDetalle(d, response.model.id);
+          });
+        }
+        this.isProcesing = false;
+        this.resetForm();
       },
       (error) => {
         console.error(error.error);
@@ -180,6 +190,12 @@ export class AnalysisComponent implements OnInit {
         this.isProcesing = false;
       }
     );
+  }
+
+  resetForm() {
+    this.tableComponent.clearTable();
+    this.analisisUnitario = null;
+    this.buildForm();
   }
 
 }

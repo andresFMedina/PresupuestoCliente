@@ -75,4 +75,11 @@ export class ChapterTableComponent implements OnInit {
     );
   }
 
+  clearTable() {
+    this.items = [];
+    this.data = [];
+    this.resultsLength = 0;
+    this.capituloId = 0;
+  }
+
 }

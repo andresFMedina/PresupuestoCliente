@@ -50,7 +50,9 @@ export class ChapterComponent implements OnInit {
       .pipe(switchMap((params: Params) => {
         this.id = (params.id) ? Number(params.id) : 0;
         console.log(this.id);
-        return this.capituloService.getCapituloById(params.id);
+        if (this.id !== 0) {
+          return this.capituloService.getCapituloById(params.id);
+        }
       }))
       .subscribe((capitulo) => {
         this.capitulo = capitulo.model;
@@ -76,17 +78,21 @@ export class ChapterComponent implements OnInit {
   createCapitulo(items: Item[]) {
     this.isProcesing = true;
     console.log(items);
-    const costos: CostosMateriales = calcularCostoMaterialesItems(items);
-    const subtotal = items.map(i => i.valorParcial).reduce((acc, value) => acc + value, 0);
+    let costos: CostosMateriales;
+    if (items) {
+      costos = calcularCostoMaterialesItems(items);
+    }
+    const subtotal = (items)
+      ? items.map(i => i.valorParcial).reduce((acc, value) => acc + value, 0) : 0;
     const capitulo: Capitulo = {
       id: Number(this.id),
       proyectoId: this.proyecto.id,
       numero: parseInt(this.form.get('numero').value, 10),
       descripcion: this.form.get('descripcion').value,
       subtotal: Math.round(subtotal),
-      costoEquipo: costos.costoEquipo,
-      costoManoObra: costos.costoManoObra,
-      costoMateriales: costos.costoMateriales
+      costoEquipo: (costos) ? costos.costoEquipo : 0,
+      costoManoObra: (costos) ? costos.costoManoObra : 0,
+      costoMateriales: (costos) ? costos.costoMateriales : 0
     };
     console.log(capitulo);
     if (this.id === 0) {
@@ -102,12 +108,16 @@ export class ChapterComponent implements OnInit {
         console.log(response);
         this.capitulo = response.model;
         let numeroCapitulo = 1;
-        items.forEach((i) => {
-          i.capituloId = this.capitulo.id;
-          i.numeroCapitulo = numeroCapitulo;
-          numeroCapitulo++;
-          this.putItem(i);
-        });
+        if (items) {
+          items.forEach((i) => {
+            i.capituloId = this.capitulo.id;
+            i.numeroCapitulo = numeroCapitulo;
+            numeroCapitulo++;
+            this.putItem(i);
+          });
+        }
+        this.isProcesing = false;
+        this.resetForm();
       },
       (error) => {
         console.error(error.error);
@@ -146,6 +156,14 @@ export class ChapterComponent implements OnInit {
         this.isProcesing = false;
       }
     );
+  }
+
+  resetForm() {
+    this.chapterTableComponent.clearTable();
+    this.capitulo = null;
+    this.id = 0;
+    this.itemsAgregados = 0;
+    this.buildForm();
   }
 
 

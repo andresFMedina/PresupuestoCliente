@@ -139,5 +139,14 @@ export class TableComponent implements OnInit {
     );
   }
 
+  clearTable(){
+    this.detalles = [];
+    this.data = [];
+    this.dataSource = new BehaviorSubject<AbstractControl[]>([]);
+    this.detallesForm = this.formBuilder.array([]);
+    this.itemId = 0;
+    this.analisisId = 0;
+  }
+
 
 }

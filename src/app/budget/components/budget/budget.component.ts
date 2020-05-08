@@ -52,8 +52,9 @@ export class BudgetComponent implements OnInit {
     this.route.params
       .pipe(switchMap((params: Params) => {
         this.id = (params.id) ? Number(params.id) : 0;
-        console.log(this.id);
-        return this.itemService.getItemById(this.id);
+        if (this.id !== 0) {
+          return this.itemService.getItemById(this.id);
+        }
       }))
       .subscribe((item) => {
         this.item = item.model;
@@ -75,7 +76,11 @@ export class BudgetComponent implements OnInit {
     this.isProcesing = true;
     console.log(detalles);
     const valorUnitario = (detalles) ? this.getValorUnitario(detalles) : 0;
-    const costos: CostosMateriales = calcularCostoMaterialesDetalles(detalles);
+    let costos: CostosMateriales;
+    if (detalles) {
+      costos = calcularCostoMaterialesDetalles(detalles);
+    }
+
     const item: Item = {
       id: Number(this.id),
       codigo: this.form.get('codigo').value,
@@ -86,9 +91,9 @@ export class BudgetComponent implements OnInit {
       detalles: null,
       proyectoId: this.proyecto.id,
       valorUnitario: Math.round(valorUnitario),
-      costoMateriales: costos.costoMateriales,
-      costoEquipo: costos.costoEquipo,
-      costoManoObra: costos.costoManoObra
+      costoMateriales: (costos) ? costos.costoMateriales : 0,
+      costoEquipo: (costos) ? costos.costoEquipo : 0,
+      costoManoObra: (costos) ? costos.costoManoObra : 0
     };
     if (this.id === 0) {
       this.postItem(item, detalles);
@@ -150,9 +155,13 @@ export class BudgetComponent implements OnInit {
       (response) => {
         console.log(response);
         // this.item = response;
-        detalles.forEach((d) => {
-          this.postDetalle(d, response.model.id);
-        });
+        if (detalles) {
+          detalles.forEach((d) => {
+            this.postDetalle(d, response.model.id);
+          });
+        }
+        this.isProcesing = false;
+        this.resetForm();
       },
       (error) => {
         console.error(error.error);
@@ -210,6 +219,12 @@ export class BudgetComponent implements OnInit {
         this.isProcesing = false;
       }
     );
+  }
+
+  resetForm() {
+    this.tableComponent.clearTable();
+    this.item = null;
+    this.buildForm();
   }
 
 }

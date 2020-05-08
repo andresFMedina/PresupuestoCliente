@@ -9,10 +9,10 @@
         <mat-card-content>
             <table mat-table [dataSource]=capitulos class="mat-elevation-z8">
                 <!--Columna codigo-->
-                <ng-container matColumnDef="codigo">
+                <ng-container matColumnDef="numero">
                     <th mat-header-cell *matHeaderCellDef> Código </th>
                     <td mat-cell *matCellDef="let item">
-                        {{item.codigo}}
+                        {{item.numero}}
                     </td>
                 </ng-container>
     
@@ -25,10 +25,10 @@
                 </ng-container>
     
                 <!--Columna valor Parcial-->
-                <ng-container matColumnDef="parcial">
+                <ng-container matColumnDef="subtotal">
                     <th mat-header-cell *matHeaderCellDef> Valor Parcial </th>
                     <td mat-cell *matCellDef="let item">
-                        {{(item.valorUnitario * item.cantidad | currency)}}
+                        {{item.subtotal | currency}}
                     </td>
                 </ng-container>
 

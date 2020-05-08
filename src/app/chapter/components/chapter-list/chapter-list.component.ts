@@ -15,7 +15,7 @@ export class ChapterListComponent implements OnInit {
   capitulos: Capitulo[];
   proyecto: Proyecto;
 
-  displayedColumns = ['codigo', 'descripcion', 'parcial', 'edit', 'delete'];
+  displayedColumns = ['numero', 'descripcion', 'subtotal', 'edit', 'delete'];
 
   constructor(
     private capituloService: CapituloService,
